@@ -5,6 +5,7 @@
 		"fstream": "cpp",
 		"__split_buffer": "cpp",
 		"deque": "cpp",
-		"vector": "cpp"
+		"vector": "cpp",
+		"string": "cpp"
 	}
 }

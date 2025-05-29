@@ -1,8 +1,8 @@
 #include "graph.hpp"
 
-Graph::Graph(const char* const & edgelist_csv_fn, GraphType type){
-
+Graph::Graph(const char* const& edgelist_csv_fn, GraphType type)
 	: graph_type(type)
+{
 
     ifstream my_file(edgelist_csv_fn);
     if (!my_file.is_open()) {
@@ -33,18 +33,13 @@ Graph::Graph(const char* const & edgelist_csv_fn, GraphType type){
 }
 
 void Graph::print_graph() const{
-	: graph_type(type)
-	string arrow = "";
-	if(graph_type == GraphType::Undirected){
-		arrow = "<->";
-	}
-	else{
-		arrow = "->";
-	}
+	string arrow = (graph_type == GraphType::Undirected) ? "<->" : "->";
 	
 	cout << "Graph: " << endl;
 	for(const auto& vertex : adjacency_list){
-		cout << vertex.first << arrow << vertex.second << endl;
+		for(const auto& neighbor : vertex.second){
+			cout << vertex.first << arrow << neighbor.first << endl;
+		}
 	}
 }
 
@@ -59,11 +54,17 @@ void Graph::print_aj() const{
 	}
 }
 
-unsigned int Graph::vertex_count(){
+unsigned int Graph::vertex_count() const{
 	return vertex_set.size();
 }
 
-unsigned int Graph::edge_count(){
+unsigned int Graph::edge_count() const{
 	unsigned int count = 0;
-	// TODO
+	for(const auto& vertex : adjacency_list){
+		count += vertex.second.size();
+	}
+	if(graph_type == GraphType::Undirected){
+		return count / 2;
+	}
+	return count;
 }
